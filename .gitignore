@@ -102,3 +102,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+#ocultar los compilados
+dist/
+#ocultar los modulos de las dependencias
+node_modules/
