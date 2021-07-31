@@ -11,7 +11,7 @@ module.exports = function (injectStore) {
   function get(id) {
     return store.get(TABLA, id)
   }
-  function insert(data) {
+  function insert (data) {
     return store.add(TABLA, data)
   }
   function update(data) {

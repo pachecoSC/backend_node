@@ -4,12 +4,14 @@ const response = require('../../../network/response')
 
 const router = express.Router()
 
+router.use(express.json())
+
 // rutas
 router.get('/',list)
 router.get('/:id',get)
-router.get('/insert/:id/:nombre/:apellido/:edad',insert)
-router.get('/update/:id/:nombre/:apellido',update)
-router.get('/remove/:id',remove)
+router.put('/', insert)
+router.patch('/',update)
+router.delete('/',remove)
 
 function list(req, res) {
   Controller.list()
@@ -30,29 +32,16 @@ function get (req, res) {
     })
 }
 function insert (req, res) {
-  let param = {
-    id: req.params.id.toString(),
-    nombre: req.params.nombre,
-    apellido: req.params.apellido,
-    edad: req.params.edad.toString()
-  }
-
-  // console.log(param)
-  Controller.insert(param)
+  Controller.insert(req.body)
     .then((data) => {
-      response.success(req, res, data, 200)
+      response.success(req, res, data, 201)
     })
     .catch((err) => {
       response.error(req, res, err.message, 500)
     })
 }
 function update(req, res) {
-  let param = {
-    id: req.params.id,
-    nombre: req.params.nombre,
-    apellido: req.params.apellido
-  }
-  Controller.update(param)
+  Controller.update(req.body)
     .then((data) => {
       response.success(req, res, data, 200)
     })
@@ -61,7 +50,7 @@ function update(req, res) {
     })
 }
 function remove(req, res) {
-  Controller.remove(req.params.id)
+  Controller.remove(req.body)
     .then((data) => {
       response.success(req, res, data, 200)
     })

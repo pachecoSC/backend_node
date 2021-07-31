@@ -47,6 +47,7 @@ async function edit(tabla, data) {
   if (item !== undefined) {
     item.nombre = data.nombre
     item.apellido = data.apellido
+    item.edad = data.edad
     cod = '1'
     msg = 'edición exitosa'
   } else {
@@ -62,11 +63,11 @@ async function edit(tabla, data) {
   return obj
 }
 
-async function remove(tabla, id) {
-  db[tabla].splice(Number(id) - 1, 1)
+async function remove(tabla, data) {
+  db[tabla].splice(Number(data.id) - 1, 1)
   // verificamos si existe en la lista
   let col = db[tabla]
-  let user = col.filter((item) => item.id === id)[0]
+  let user = col.filter((item) => item.id === data.id)[0]
 
   if (user !== undefined) {
     cod = '0'
