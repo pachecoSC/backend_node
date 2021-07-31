@@ -4,7 +4,10 @@ const response = require('../../../network/response')
 
 const router = express.Router()
 
-router.use(express.json())
+router.use(express.json())//es necesario para que los post,patch,delete obtengan el body correctamente.
+
+// app.use(express.json()) // for parsing application/json
+// app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // rutas
 router.get('/',list)
@@ -25,7 +28,11 @@ function list(req, res) {
 function get (req, res) {
   Controller.get(req.params.id)
     .then((data) => {
-      response.success(req, res, data, 200)
+      if (data !== null){
+        response.success(req, res, data, 200)
+      }else{
+        response.success(req, res, 'El Usuario no existe', 404)
+      }
     })
     .catch((err) => {
       response.error(req, res, err.message, 500)

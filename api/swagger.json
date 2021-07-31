@@ -1,0 +1,221 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Una red social para el entendimiento del curso de node js .",
+    "version": "1.0.0",
+    "title": "Red Social Chris",
+    "contact": {
+      "email": "pachecoschris@gmail.com"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operaciones sobre el usuario"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Lista de usuarios",
+        "description": "Listado de usuarios",
+        "operationId": "listUser",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "operación satisfactoria"
+          },
+          "500": {
+            "description": "error de servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Crea un usuario",
+        "description": "Creación de un usuario",
+        "operationId": "createUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "usuario creado",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "operación satisfactoria"
+          },
+          "500": {
+            "description": "error de servidor"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Actualizar un usuario",
+        "description": "Edición de un usuario",
+        "operationId": "editUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "usuario editado",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operación satisfactoria"
+          },
+          "500": {
+            "description": "error de servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Eliminar un usuario",
+        "description": "Eliminación de un usuario",
+        "operationId": "removeUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "usuario eliminado",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operación satisfactoria"
+          },
+          "500": {
+            "description": "error de servidor"
+          }
+        }
+      }
+    },
+    "/user/{Id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Detalle de un usuario",
+        "description": "Muestra un usuario en especifico",
+        "operationId": "detailUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "description": "id de usuario",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operación satisfactoria"
+          },
+          "404": {
+            "description": "el usuario no existe"
+          },
+          "500": {
+            "description": "error de servidor"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "apellido": {
+          "type": "string"
+        },
+        "edad": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "cod_result": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

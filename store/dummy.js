@@ -8,12 +8,26 @@ const db = {
 }
 let cod, msg
 
-async function list(tabla) {
-  return db[tabla]
+async function list (tabla) {
+  let col = db[tabla]
+  if (col.length > 0) {
+    cod = '1'
+    msg = 'se encontraron datos'
+  } else {
+    cod = '0'
+    msg='No hay datos'
+  }
+  let obj = {
+    cod_result: cod,
+    message: msg,
+    data:col
+  }
+
+  return obj
 }
 
 async function get(tabla, id) {
-  let col = await list(tabla)
+  let col = db[tabla]
   return col.filter((item) => item.id === id)[0] || null
 }
 

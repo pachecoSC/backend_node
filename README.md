@@ -12,17 +12,17 @@ luego para instalar las dependencias
 
 para probarlo tenemos que correr
 
-> nodemon api/index.js
+> npm run dev
 
 y en la url de chrome escribir --> http://localhost:3000/api/user
 
-ejemplos
+Nota: para obtener el json de manera mas sencilla se utiliza la siguiente pagina
 
-insercion
-http://localhost:3000/api/user/insert/5/pablo/marm/12
+- https://editor.swagger.io/
 
-eliminacion
-http://localhost:3000/api/user/remove/1
+instalacion de libreria
 
-actualizacion
-http://localhost:3000/api/user/update/1/chris/suige
+> npm i swagger-ui-express
+
+para visualizar la documentacion
+- http://localhost:3000/api-docs/
