@@ -15,7 +15,7 @@ module.exports = function (injectStore) {
     return store.add(TABLA, data)
   }
   function update(data) {
-    return store.upsert(TABLA, data)
+    return store.edit(TABLA, data)
   }
   function remove(id) {
     return store.remove(TABLA, id)

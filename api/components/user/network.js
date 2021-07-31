@@ -4,7 +4,14 @@ const response = require('../../../network/response')
 
 const router = express.Router()
 
-router.get('/', function (req, res) {
+// rutas
+router.get('/',list)
+router.get('/:id',get)
+router.get('/insert/:id/:nombre/:apellido/:edad',insert)
+router.get('/update/:id/:nombre/:apellido',update)
+router.get('/remove/:id',remove)
+
+function list(req, res) {
   Controller.list()
     .then((data) => {
       response.success(req, res, data, 200)
@@ -12,8 +19,8 @@ router.get('/', function (req, res) {
     .catch((err) => {
       response.error(req, res, err.message, 500)
     })
-})
-router.get('/:id', function (req, res) {
+}
+function get (req, res) {
   Controller.get(req.params.id)
     .then((data) => {
       response.success(req, res, data, 200)
@@ -21,8 +28,8 @@ router.get('/:id', function (req, res) {
     .catch((err) => {
       response.error(req, res, err.message, 500)
     })
-})
-router.get('/insert/:id/:nombre/:apellido/:edad', function (req, res) {
+}
+function insert (req, res) {
   let param = {
     id: req.params.id.toString(),
     nombre: req.params.nombre,
@@ -38,8 +45,8 @@ router.get('/insert/:id/:nombre/:apellido/:edad', function (req, res) {
     .catch((err) => {
       response.error(req, res, err.message, 500)
     })
-})
-router.get('/update/:id/:nombre/:apellido', function (req, res) {
+}
+function update(req, res) {
   let param = {
     id: req.params.id,
     nombre: req.params.nombre,
@@ -52,8 +59,8 @@ router.get('/update/:id/:nombre/:apellido', function (req, res) {
     .catch((err) => {
       response.error(req, res, err.message, 500)
     })
-})
-router.get('/remove/:id', function (req, res) {
+}
+function remove(req, res) {
   Controller.remove(req.params.id)
     .then((data) => {
       response.success(req, res, data, 200)
@@ -61,6 +68,6 @@ router.get('/remove/:id', function (req, res) {
     .catch((err) => {
       response.error(req, res, err.message, 500)
     })
-})
+}
 
 module.exports = router

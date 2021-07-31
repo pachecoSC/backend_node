@@ -40,7 +40,7 @@ async function add(tabla, data) {
   return obj
 }
 
-async function upsert(tabla, data) {
+async function edit(tabla, data) {
   let col = await list(tabla)
   let item = col.filter((item) => item.id === data.id)[0]
   // actualizar los datos
@@ -82,21 +82,12 @@ async function remove(tabla, id) {
     data: col
   }
   return obj
-  // se agrego una logica para imprimir dato.. no se esta eliminando
-  /* let col = await list(tabla)
-  let user = col.filter((item) => item.id === id)[0]
-  let mess = `se elemino el id ${id} con nombre ${user.nombre} ${user.apellido}`
-  let obj = {
-    cod_result: 1,
-    message: mess
-  }
-  return obj*/
 }
 
 module.exports = {
   list,
   get,
   add,
-  upsert,
+  edit,
   remove
 }
