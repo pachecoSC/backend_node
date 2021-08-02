@@ -26,3 +26,5 @@ instalacion de libreria
 
 para visualizar la documentacion
 - http://localhost:3000/api-docs/
+
+para el tema de la id se va a utilizar nanoid ->trae id autonumerico que no se repiten

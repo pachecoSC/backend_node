@@ -1,26 +1,34 @@
 const db = {
   user: [
-    { id: '1', nombre: 'chris', apellido: 'pacheco', edad: '28' },
+    {
+      id: '1',
+      nombre: 'chris',
+      apellido: 'pacheco',
+      edad: '28',
+      password: 'toor',
+      username: 'root'
+    }
+  ]
+  /* datos para futuro
     { id: '2', nombre: 'leonel', apellido: 'sarango', edad: '27' },
     { id: '3', nombre: 'beto', apellido: 'camacho', edad: '49' },
-    { id: '4', nombre: 'patty', apellido: 'leon', edad: '49' }
-  ]
+    { id: '4', nombre: 'patty', apellido: 'leon', edad: '49' } */
 }
 let cod, msg
 
-async function list (tabla) {
+async function list(tabla) {
   let col = db[tabla]
   if (col.length > 0) {
     cod = '1'
     msg = 'se encontraron datos'
   } else {
     cod = '0'
-    msg='No hay datos'
+    msg = 'No hay datos'
   }
   let obj = {
     cod_result: cod,
     message: msg,
-    data:col
+    data: col
   }
 
   return obj
@@ -32,6 +40,10 @@ async function get(tabla, id) {
 }
 
 async function add(tabla, data) {
+  //si la tabla no existe debemos crearla
+  if (!db[tabla]) {
+    db[tabla] = []
+  }// esto solo es necesario para evitar errores, cuando trabajemos con base de datos no sera neceario, las tablas siempre van a existir.(se definen desde el inicio)
   db[tabla].push(data)
 
   let col = db[tabla]
@@ -50,7 +62,7 @@ async function add(tabla, data) {
     message: msg,
     data: col
   }
-
+  console.log(db)
   return obj
 }
 
@@ -98,11 +110,18 @@ async function remove(tabla, data) {
   }
   return obj
 }
+function query (tabla, q) {
+  let col = db[tabla]
+  let keys = Object.keys(q)
+  let key = keys[0]
+  return col.filter((item) => item[key] === q[key])[0] || null
+}
 
 module.exports = {
   list,
   get,
   add,
   edit,
-  remove
+  remove,
+  query
 }
