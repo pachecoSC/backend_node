@@ -1,20 +1,22 @@
 const express = require('express')
+
+const secure = require('./secure')
 const Controller = require('./index')
 const response = require('../../../network/response')
 
 const router = express.Router()
 
-router.use(express.json())//es necesario para que los post,patch,delete obtengan el body correctamente.
+router.use(express.json()) //es necesario para que los post,patch,delete obtengan el body correctamente.
 
 // app.use(express.json()) // for parsing application/json
 // app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // rutas
-router.get('/',list)
-router.get('/:id',get)
+router.get('/', list)
+router.get('/:id', get)
 router.put('/', insert)
-router.patch('/',update)
-router.delete('/',remove)
+router.patch('/',secure('update'), update)
+router.delete('/', remove)
 
 function list(req, res) {
   Controller.list()
@@ -25,12 +27,12 @@ function list(req, res) {
       response.error(req, res, err.message, 500)
     })
 }
-function get (req, res) {
+function get(req, res) {
   Controller.get(req.params.id)
     .then((data) => {
-      if (data !== null){
+      if (data !== null) {
         response.success(req, res, data, 200)
-      }else{
+      } else {
         response.success(req, res, 'El Usuario no existe', 404)
       }
     })
@@ -38,7 +40,7 @@ function get (req, res) {
       response.error(req, res, err.message, 500)
     })
 }
-function insert (req, res) {
+function insert(req, res) {
   Controller.insert(req.body)
     .then((data) => {
       response.success(req, res, data, 201)

@@ -43,7 +43,7 @@ async function add(tabla, data) {
   //si la tabla no existe debemos crearla
   if (!db[tabla]) {
     db[tabla] = []
-  }// esto solo es necesario para evitar errores, cuando trabajemos con base de datos no sera neceario, las tablas siempre van a existir.(se definen desde el inicio)
+  } // esto solo es necesario para evitar errores, cuando trabajemos con base de datos no sera neceario, las tablas siempre van a existir.(se definen desde el inicio)
   db[tabla].push(data)
 
   let col = db[tabla]
@@ -62,12 +62,13 @@ async function add(tabla, data) {
     message: msg,
     data: col
   }
-  console.log(db)
+  console.log(db) //trtae toda la base de datos.
   return obj
 }
 
 async function edit(tabla, data) {
-  let col = await list(tabla)
+  // let col = await list(tabla)
+  let col = db[tabla]
   let item = col.filter((item) => item.id === data.id)[0]
   // actualizar los datos
   if (item !== undefined) {
@@ -110,7 +111,7 @@ async function remove(tabla, data) {
   }
   return obj
 }
-function query (tabla, q) {
+function query(tabla, q) {
   let col = db[tabla]
   let keys = Object.keys(q)
   let key = keys[0]
