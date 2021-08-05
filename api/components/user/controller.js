@@ -1,6 +1,6 @@
 const { nanoid } = require('nanoid')
 const auth = require('../auth')
-const TABLA = 'user'
+const TABLA = 't_user'
 
 module.exports = function (injectStore) {
   let store = injectStore

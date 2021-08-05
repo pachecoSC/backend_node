@@ -1,8 +1,8 @@
 const express = require('express')
 
 const secure = require('./secure')
-const Controller = require('./index')
 const response = require('../../../network/response')
+const Controller = require('./index')
 
 const router = express.Router()
 
@@ -23,8 +23,8 @@ function list(req, res) {
     .then((data) => {
       response.success(req, res, data, 200)
     })
-    .catch((err) => {
-      response.error(req, res, err.message, 500)
+    .catch(err => {
+      next()
     })
 }
 function get(req, res) {
@@ -36,8 +36,8 @@ function get(req, res) {
         response.success(req, res, 'El Usuario no existe', 404)
       }
     })
-    .catch((err) => {
-      response.error(req, res, err.message, 500)
+    .catch(err => {
+      next()
     })
 }
 function insert(req, res) {
@@ -45,8 +45,8 @@ function insert(req, res) {
     .then((data) => {
       response.success(req, res, data, 201)
     })
-    .catch((err) => {
-      response.error(req, res, err.message, 500)
+    .catch(err => {
+      next()
     })
 }
 function update(req, res) {
@@ -54,8 +54,8 @@ function update(req, res) {
     .then((data) => {
       response.success(req, res, data, 200)
     })
-    .catch((err) => {
-      response.error(req, res, err.message, 500)
+    .catch(err => {
+      next()
     })
 }
 function remove(req, res) {
@@ -63,8 +63,8 @@ function remove(req, res) {
     .then((data) => {
       response.success(req, res, data, 200)
     })
-    .catch((err) => {
-      response.error(req, res, err.message, 500)
+    .catch(err => {
+      next()
     })
 }
 
