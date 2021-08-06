@@ -84,10 +84,21 @@ function  query(table,query) {
   })
 }
 
+function remove (table, id) {
+  return new Promise((resolve, reject) => {
+    conn.query(`DELETE FROM  ${table} WHERE id='${id}'`, (err, res) => {
+      if (err) return reject(err)
+
+      resolve(res)
+    })
+  })
+}
+
 module.exports = {
   list,
   get,
   add,
   edit,
-  query
+  query,
+  remove
 }

@@ -78,17 +78,22 @@ function update(req, res, next) {
     .then((data) => {
       obj =
         data.affectedRows > 0
-          ? bindRespuesta(1, 'Edicion exitosa', undefined)
-          : bindRespuesta(0, 'Edicion fallida', undefined)
+          ? bindRespuesta(1, 'Edición exitosa', undefined)
+          : bindRespuesta(0, 'Edición fallida', undefined)
 
       response.success(req, res, obj, 200)
     })
     .catch(next)
 }
 function remove(req, res, next) {
-  Controller.remove(req.body)
+  Controller.remove(req.body.id)
     .then((data) => {
-      response.success(req, res, data, 200)
+      obj =
+        data.affectedRows > 0
+          ? bindRespuesta(1, 'Eliminación exitosa', undefined)
+          : bindRespuesta(0, 'Eliminación fallida', undefined)
+
+      response.success(req, res, obj, 200)
     })
     .catch(next)
 }
