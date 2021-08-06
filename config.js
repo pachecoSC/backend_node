@@ -9,6 +9,6 @@ module.exports = {
     host: process.env.MYSQL_HOST || 'localhost',
     user: process.env.MYSQL_USER || 'root',
     password: process.env.MYSQL_PASS || 'root',
-    database: process.env.MYSQL_DB || 'db_node_social'
+    database: process.env.MYSQL_DB || 'db_node_test'
   }
 }

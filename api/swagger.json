@@ -16,21 +16,15 @@
       "description": "Operaciones sobre el usuario"
     }
   ],
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/user": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Lista de usuarios",
         "description": "Listado de usuarios",
         "operationId": "listUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "operación satisfactoria"
@@ -41,15 +35,11 @@
         }
       },
       "put": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Crea un usuario",
         "description": "Creación de un usuario",
         "operationId": "createUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -71,15 +61,11 @@
         }
       },
       "patch": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Actualizar un usuario",
         "description": "Edición de un usuario",
         "operationId": "editUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -101,15 +87,11 @@
         }
       },
       "delete": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Eliminar un usuario",
         "description": "Eliminación de un usuario",
         "operationId": "removeUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -133,15 +115,11 @@
     },
     "/user/{Id}": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Detalle de un usuario",
         "description": "Muestra un usuario en especifico",
         "operationId": "detailUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Id",
@@ -186,6 +164,10 @@
       "type": "object",
       "properties": {
         "id": {
+          "type": "string",
+          "description": "creado por nanoid"
+        },
+        "username": {
           "type": "string"
         },
         "nombre": {
@@ -195,6 +177,25 @@
           "type": "string"
         },
         "edad": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fecha_creacion": {
+        "type": "string",
+        "format": "date-time"
+        }
+      }
+    },
+    "Auth": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "token": {
           "type": "string"
         }
       }

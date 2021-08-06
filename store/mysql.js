@@ -47,6 +47,47 @@ function list(table) {
   })
 }
 
+function get(table,id) {
+  return new Promise((resolve, reject) => {
+    conn.query(`SELECT * FROM  ${table} WHERE id='${id}'`, (err, data) => {
+      if (err) return reject(err)
+
+      resolve(data)
+    })
+  })
+}
+
+function add (table, data) {
+  return new Promise((resolve, reject) => {
+    conn.query(`INSERT INTO ${table} SET?`, data,(err, result) => {
+      if (err) return reject(err)
+      resolve(result)
+    })
+  })
+}
+function edit (table, data) {
+  return new Promise((resolve, reject) => {
+    conn.query(`UPDATE ${table} SET? WHERE id=?`, [data,data.id],(err, result) => {
+      if (err) return reject(err)
+      resolve(result)
+    })
+  })
+}
+
+function  query(table,query) {
+  return new Promise((resolve, reject) => {
+    conn.query(`SELECT * FROM  ${table} WHERE ?`, query,(err, res) => {
+      if (err) return reject(err)
+      // resolve(result)
+      resolve(res[0] || null);
+    })
+  })
+}
+
 module.exports = {
-  list
+  list,
+  get,
+  add,
+  edit,
+  query
 }

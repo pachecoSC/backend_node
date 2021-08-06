@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 
 const auth = require('../../../auth')
-const TABLA = 'auth'
+const TABLA = 'Auth'
 
 module.exports = function (injectedStore) {
   let store = injectedStore
@@ -31,31 +31,17 @@ module.exports = function (injectedStore) {
   async function login(username, password) {
     const data = await store.query(TABLA, { username: username })
     // return data
-    let cod, msg, token
+    // console.log('contraseña',data.password)
     //si data llega vacia va al chtch del network con error 400
     return bcrypt.compare(password, data.password)
-      .then((res) => {
-        if (res) {
-          token = auth.sign(data)
-          cod = '1'
-          msg = 'usuario logeado'
-        } else {
-          cod = '0'
-          msg = 'contraseña erronea'
-        }
-
-        let obj = {
-          cod_result: cod,
-          message: msg,
-          token: token
-          // data: data //datos de usuario y contrasña no se deben regresar con el login.
-        }
-        return obj
-      })
-      .catch((error) => {
-        // console.error('Ups!', error.message)
-        throw new Error('Información invalida')
-      })
+            .then(res => {
+                if (res === true) {
+                    // Generar token;
+                    return auth.sign({ ...data })
+                } else {
+                    throw new Error('Informacion invalida');
+                }
+            })
   }
 
   return {

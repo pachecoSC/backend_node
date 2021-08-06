@@ -15,57 +15,82 @@ router.use(express.json()) //es necesario para que los post,patch,delete obtenga
 router.get('/', list)
 router.get('/:id', get)
 router.put('/', insert)
-router.patch('/',secure('update'), update)
+router.patch('/', secure('update'), update)
 router.delete('/', remove)
 
-function list(req, res) {
+function bindRespuesta(cod, msg, data) {
+  let res
+
+  res = {
+    cod_resul: cod,
+    msg: msg,
+    result: data
+  }
+
+  return res
+}
+
+function list(req, res, next) {
+  let obj
   Controller.list()
     .then((data) => {
-      response.success(req, res, data, 200)
-    })
-    .catch(err => {
-      next()
-    })
-}
-function get(req, res) {
-  Controller.get(req.params.id)
-    .then((data) => {
-      if (data !== null) {
-        response.success(req, res, data, 200)
+      if (data.length > 0) {
+        obj = bindRespuesta(1, '', data)
+        response.success(req, res, obj, 200)
       } else {
-        response.success(req, res, 'El Usuario no existe', 404)
+        obj = bindRespuesta(0, 'No se encontraron datos', data)
+        response.success(req, res, obj, 200)
       }
     })
-    .catch(err => {
-      next()
-    })
+    .catch(next)
 }
-function insert(req, res) {
+function get(req, res, next) {
+  let obj
+  Controller.get(req.params.id)
+    .then((data) => {
+      if (data.length > 0) {
+        obj = bindRespuesta(1, '', data)
+        response.success(req, res, obj, 200)
+      } else {
+        obj = bindRespuesta(0, 'No se encontraron datos', data)
+        response.success(req, res, 'obj', 200)
+      }
+    })
+    .catch(next)
+}
+
+function insert(req, res, next) {
+  let obj
   Controller.insert(req.body)
     .then((data) => {
-      response.success(req, res, data, 201)
+      obj =
+        data.affectedRows > 0
+          ? bindRespuesta(1, 'Registro exitoso', undefined)
+          : bindRespuesta(0, 'Registro fallido', undefined)
+      // obj = bindRespuesta(1, 'registro exitoso', data)
+      response.success(req, res, obj, 201)
     })
-    .catch(err => {
-      next()
-    })
+    .catch(next)
 }
-function update(req, res) {
+function update(req, res, next) {
+  let obj
   Controller.update(req.body)
     .then((data) => {
-      response.success(req, res, data, 200)
+      obj =
+        data.affectedRows > 0
+          ? bindRespuesta(1, 'Edicion exitosa', undefined)
+          : bindRespuesta(0, 'Edicion fallida', undefined)
+
+      response.success(req, res, obj, 200)
     })
-    .catch(err => {
-      next()
-    })
+    .catch(next)
 }
-function remove(req, res) {
+function remove(req, res, next) {
   Controller.remove(req.body)
     .then((data) => {
       response.success(req, res, data, 200)
     })
-    .catch(err => {
-      next()
-    })
+    .catch(next)
 }
 
 module.exports = router
