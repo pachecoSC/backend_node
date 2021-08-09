@@ -77,7 +77,13 @@ function remove(req, res, next) {
 function postUser(req, res, next) {
   Controller.postUser(req.params.id)
     .then((data) => {
-      return response.success(req, res, data, 200)
+      if (data.length > 0) {
+        obj = bindRespuesta(1, '', data)
+        response.success(req, res, obj, 200)
+      } else {
+        obj = bindRespuesta(0, 'Este usuario aun no ha realizado post', data)
+        response.success(req, res, obj, 200)
+      }
     })
     .catch(next)
 }

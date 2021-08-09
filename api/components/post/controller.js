@@ -51,7 +51,19 @@ module.exports = function (injectStore) {
     join['User'] = 'autor' //se envia la key es la "tabla" y el valor es el "campo" son usadas para armar el join
     const query = { autor: user } //es el campo a buscar en el where
 
-    return await store.query(TABLA, query, join)
+    let res = await store.query(TABLA, query, join)
+    // console.log('resultado', res)
+    //porcion de codigo para formatear las fechas
+    res.forEach(element => {
+      element.fecha_creacion = moment(element.fecha_creacion).format('DD-MM-YYYY HH:mm:ss')
+      if (element.fecha_modificacion!==null) {
+        element.fecha_modificacion = moment(element.fecha_modificacion).format('DD-MM-YYYY HH:mm:ss')
+      } else {
+        element.fecha_modificacion =''
+      }
+    });
+
+    return res
   }
 
   return {
