@@ -12,9 +12,9 @@ module.exports = function (injectStore) {
     let res = await store.list(TABLA)
     // console.log('resultado', res)
     res.forEach(element => {
-      element.fecha_creacion = moment(element.fecha_creacion).format('YYYY-MM-DD HH:mm:ss')
+      element.fecha_creacion = moment(element.fecha_creacion).format('DD-MM-YYYY HH:mm:ss')
       if (element.fecha_modificacion!==null) {
-        element.fecha_modificacion = moment(element.fecha_modificacion).format('YYYY-MM-DD HH:mm:ss')
+        element.fecha_modificacion = moment(element.fecha_modificacion).format('DD-MM-YYYY HH:mm:ss')
       } else {
         element.fecha_modificacion =''
       }
@@ -35,9 +35,30 @@ module.exports = function (injectStore) {
 
     return store.add(TABLA, post)
   }
+  function update (data) {
+    if (!data.fecha_modificacion) {
+      data.fecha_modificacion = moment().format('YYYY-MM-DD HH:mm:ss')
+    }
+    return store.edit(TABLA, data)
+  }
+  function remove (data) {
+    // console.log('body', data)
+    return store.remove(TABLA, data.id)
+  }
+
+  async function postUser(user) {
+    const join = {}
+    join['User'] = 'autor' //se envia la key es la "tabla" y el valor es el "campo" son usadas para armar el join
+    const query = { autor: user } //es el campo a buscar en el where
+
+    return await store.query(TABLA, query, join)
+  }
 
   return {
     list,
-    insert
+    insert,
+    update,
+    remove,
+    postUser
   }
 }

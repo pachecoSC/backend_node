@@ -74,14 +74,15 @@ function edit (table, data) {
   })
 }
 
-function query (table, query,join) {
+function query (table, query, join) {
 
   let joinQuery = ''
   if (join) {
+    // console.log('0',join)
     const key = Object.keys(join)[0]
     const val = join[key]
     joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.id`
-
+    // console.log('1',joinQuery)
   }
   return new Promise((resolve, reject) => {
     conn.query(`SELECT * FROM  ${table} ${joinQuery} WHERE ${table}.?`, query, (err, res) => {

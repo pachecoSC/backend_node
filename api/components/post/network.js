@@ -1,5 +1,5 @@
 const express = require('express')
-
+const secure = require('./secure')
 const response = require('../../../network/response')
 const Controller = require('./index')
 
@@ -9,6 +9,9 @@ router.use(express.json())
 // rutas
 router.get('/', list)
 router.put('/', insert)
+router.patch('/', secure('update'), update)
+router.delete('/', secure('remove'), remove)
+router.get('/postUser/:id', postUser)
 
 let obj
 
@@ -44,6 +47,37 @@ function insert(req, res, next) {
           : bindRespuesta(0, 'Registro fallido', undefined)
       // obj = bindRespuesta(1, 'registro exitoso', data)
       response.success(req, res, obj, 201)
+    })
+    .catch(next)
+}
+function update(req, res, next) {
+  Controller.update(req.body)
+    .then((data) => {
+      obj =
+        data.affectedRows > 0
+          ? bindRespuesta(1, 'Edición exitosa', undefined)
+          : bindRespuesta(0, 'Edición fallida', undefined)
+
+      response.success(req, res, obj, 200)
+    })
+    .catch(next)
+}
+function remove(req, res, next) {
+  Controller.remove(req.body)
+    .then((data) => {
+      obj =
+        data.affectedRows > 0
+          ? bindRespuesta(1, 'Eliminación exitosa', undefined)
+          : bindRespuesta(0, 'Eliminación fallida', undefined)
+
+      response.success(req, res, obj, 200)
+    })
+    .catch(next)
+}
+function postUser(req, res, next) {
+  Controller.postUser(req.params.id)
+    .then((data) => {
+      return response.success(req, res, data, 200)
     })
     .catch(next)
 }
