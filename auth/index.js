@@ -6,7 +6,7 @@ const secret = config.jwt.secret
 function sign(data) {
   return jwt.sign(data, secret)
 }
-function verify (token) {
+function verify(token) {
   try {
     return jwt.verify(token, secret)
   } catch (error) {
@@ -15,15 +15,18 @@ function verify (token) {
   // return jwt.verify(token,secret)
 }
 const check = {
-  own: function(req, owner) {
-    const decoded = decodeHeader(req);
+  own: function (req, owner) {
+    const decoded = decodeHeader(req)
     // console.log(decoded);
 
     if (decoded.id !== owner) {
-      throw error('No tienes privilegios',401)
-        // throw new Error('No puedes hacer esto');
+      throw error('No tienes privilegios', 401)
+      // throw new Error('No puedes hacer esto');
     }
-},
+  },
+  logged: function (req) {
+    decodeHeader(req)
+  }
 }
 function getToken(auth) {
   if (!auth) {
@@ -48,5 +51,5 @@ function decodeHeader(req) {
 
 module.exports = {
   sign,
-  check,
+  check
 }

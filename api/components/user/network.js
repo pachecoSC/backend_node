@@ -14,14 +14,15 @@ router.use(express.json()) //es necesario para que los post,patch,delete obtenga
 // rutas
 router.get('/', list)
 router.get('/:id', get)
+router.post('/follow/:id',secure('follow'),follow)
 router.put('/', insert)
 router.patch('/', secure('update'), update)
 router.delete('/', remove)
 
-function bindRespuesta(cod, msg, data) {
-  let res
+let obj
 
-  res = {
+function bindRespuesta(cod, msg, data) {
+  let res = {
     cod_resul: cod,
     msg: msg,
     result: data
@@ -31,7 +32,6 @@ function bindRespuesta(cod, msg, data) {
 }
 
 function list(req, res, next) {
-  let obj
   Controller.list()
     .then((data) => {
       if (data.length > 0) {
@@ -45,7 +45,6 @@ function list(req, res, next) {
     .catch(next)
 }
 function get(req, res, next) {
-  let obj
   Controller.get(req.params.id)
     .then((data) => {
       if (data.length > 0) {
@@ -60,7 +59,6 @@ function get(req, res, next) {
 }
 
 function insert(req, res, next) {
-  let obj
   Controller.insert(req.body)
     .then((data) => {
       obj =
@@ -73,7 +71,6 @@ function insert(req, res, next) {
     .catch(next)
 }
 function update(req, res, next) {
-  let obj
   Controller.update(req.body)
     .then((data) => {
       obj =
@@ -94,6 +91,18 @@ function remove(req, res, next) {
           : bindRespuesta(0, 'Eliminación fallida', undefined)
 
       response.success(req, res, obj, 200)
+    })
+    .catch(next)
+}
+function follow(req,res,next) {
+  Controller.follow(req.user.id, req.params.id)
+    .then((data) => {
+      obj =
+        data.affectedRows > 0
+          ? bindRespuesta(1, 'Siguiendo', undefined)
+          : bindRespuesta(0, 'No se completo tarea', undefined)
+
+      response.success(req,res,obj,200)
     })
     .catch(next)
 }

@@ -39,13 +39,18 @@ module.exports = function (injectStore) {
   function remove(id) {
     return store.remove(TABLA, id)
   }
-
+  function follow(from, to) {
+    return store.add(TABLA + '_follow', {
+      user_from:from, user_to: to
+    })
+  }
   return {
     list,
     get,
     insert,
     update,
-    remove
+    remove,
+    follow
   }
 }
 
