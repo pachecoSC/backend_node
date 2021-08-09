@@ -14,7 +14,8 @@ router.use(express.json()) //es necesario para que los post,patch,delete obtenga
 // rutas
 router.get('/', list)
 router.get('/:id', get)
-router.post('/follow/:id',secure('follow'),follow)
+router.post('/follow/:id', secure('follow'), follow)
+router.get('/:id/following', following)
 router.put('/', insert)
 router.patch('/', secure('update'), update)
 router.delete('/', remove)
@@ -94,7 +95,7 @@ function remove(req, res, next) {
     })
     .catch(next)
 }
-function follow(req,res,next) {
+function follow(req, res, next) {
   Controller.follow(req.user.id, req.params.id)
     .then((data) => {
       obj =
@@ -102,7 +103,14 @@ function follow(req,res,next) {
           ? bindRespuesta(1, 'Siguiendo', undefined)
           : bindRespuesta(0, 'No se completo tarea', undefined)
 
-      response.success(req,res,obj,200)
+      response.success(req, res, obj, 200)
+    })
+    .catch(next)
+}
+function following(req, res, next) {
+  Controller.following(req.params.id)
+    .then((data) => {
+      return response.success(req, res, data, 200)
     })
     .catch(next)
 }
