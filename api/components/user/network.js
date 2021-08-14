@@ -53,7 +53,7 @@ function get(req, res, next) {
         response.success(req, res, obj, 200)
       } else {
         obj = bindRespuesta(0, 'No se encontraron datos', data)
-        response.success(req, res, 'obj', 200)
+        response.success(req, res, obj, 200)
       }
     })
     .catch(next)
