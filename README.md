@@ -37,3 +37,8 @@ se instalo libreria mysql para realizar la connexion aperia un error
 se soluciona en el gestor de base de datos en este caso: mysql workbench
 
 > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'
+
+se agrego funcionalidad para probar microservicios
+> npm run micro-serv
+
+en la url estamos enviando el nombre de la tabla como params
