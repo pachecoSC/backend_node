@@ -50,3 +50,25 @@ port  | descripcion
 3000  | api
 3001  | base de datos remota
 3002  | servicio post
+----------------------------------------------------------
+instalacion de pm2 es una herramienta que gestiona los servicios en produccion
+
+>pm2 start api/index.js --name api-principal
+>pm2 start mysql/index.js --name api-mysql
+>pm2 start post/index.js --name api-post
+
+para obtener los logs de los servicios
+
+> pm2 status
+aparece la lista de todos procesos con su indice
+>pm2 logs
+aparece todos los logs, si queremos de uno en especifico tenemos que especificarlo
+
+>pm2 logs 0
+aparece todos los logs del proceso con indice 0
+
+si queremos detener los procesos basta con poner el indice depues del comando
+>pm2 stop 0
+
+si quieres detener varios procesos se agregan los indices separados por un espacio
+>pm2 stop 0 1 2
