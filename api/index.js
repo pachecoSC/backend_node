@@ -4,7 +4,7 @@ const swaggerUi = require('swagger-ui-express')
 const config = require('../config.js')
 const user = require('./components/user/network')
 const auth = require('./components/auth/network')
-const post = require('./components/post/network')
+// const post = require('../post/components/post/network')
 const errors = require('../network/errors')
 
 const swaggerDoc = require('./swagger.json')
@@ -14,7 +14,7 @@ const app = express()
 // ROUTER
 app.use('/api/user', user)
 app.use('/api/auth', auth)
-app.use('/api/post', post)
+// app.use('/api/post', post)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 
 //seccion del error debe ser la ultima ruta

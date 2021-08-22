@@ -4,6 +4,7 @@ const TABLA = 'User'
 
 module.exports = function (injectStore) {
   let store = injectStore
+  console.log('store', store)
   if (!store) {
     require('../../../store/dummy')
   }

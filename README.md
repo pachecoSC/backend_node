@@ -42,3 +42,11 @@ se agrego funcionalidad para probar microservicios
 > npm run micro-serv
 
 en la url estamos enviando el nombre de la tabla como params
+
+----------------------------------------------------------
+la api consta de 3 micro-servicios
+----------------------------------------------------------
+port  | descripcion
+3000  | api
+3001  | base de datos remota
+3002  | servicio post

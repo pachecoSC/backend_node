@@ -7,7 +7,7 @@ const Store = require('../store/mysql')
 
 const router = express.Router()
 
-router.use(express.json())
+// router.use(express.json())
 
 router.get('/:table', list)
 router.get('/:table/:id', get)
@@ -36,9 +36,6 @@ function  insertAuth(user, pass) {
   }
 }
 
-/**
- * @params req viene de la url o body de la peticion.
- */
 function list(req, res, next) {
   Store.list(req.params.table)
     .then((data) => {
@@ -47,7 +44,7 @@ function list(req, res, next) {
         response.success(req, res, obj, 200)
       } else {
         obj = bindRespuesta(0, 'No se encontraron datos', data)
-        response.success(req, res, 'obj', 200)
+        response.success(req, res, obj, 200)
       }
     })
     .catch(next)
@@ -68,15 +65,16 @@ function list(req, res, next) {
   }
 } */
 
-function get(req, res, next) {
+function get (req, res, next) {
   Store.get(req.params.table, req.params.id)
     .then((data) => {
-      if (data.length > 0) {
+      // console.log('data get',data)
+      if (data.RowDataPacket!== undefined) {
         obj = bindRespuesta(1, '', data)
         response.success(req, res, obj, 200)
       } else {
-        obj = bindResuesta(0, 'No se encontraron datos', data)
-        responssuccess(req, res, obj, 200)
+        obj = bindRespuesta(0, 'No se encontraron datos', data)
+        response.success(req, res, obj, 200)
       }
     })
     .catch(next)

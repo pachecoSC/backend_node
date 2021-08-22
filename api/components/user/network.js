@@ -35,26 +35,27 @@ function bindRespuesta(cod, msg, data) {
 function list(req, res, next) {
   Controller.list()
     .then((data) => {
-      if (data.length > 0) {
-        obj = bindRespuesta(1, '', data)
-        response.success(req, res, obj, 200)
-      } else {
-        obj = bindRespuesta(0, 'No se encontraron datos', data)
-        response.success(req, res, obj, 200)
-      }
+      console.log('2do paso', data)
+
+      obj =
+        data.length > 0
+          ? bindRespuesta(1, '', data)
+          : bindRespuesta(0, 'No se encontraron datos', data)
+
+      response.success(req, res, obj, 200)
     })
     .catch(next)
 }
 function get(req, res, next) {
   Controller.get(req.params.id)
     .then((data) => {
-      if (data.length > 0) {
-        obj = bindRespuesta(1, '', data)
-        response.success(req, res, obj, 200)
-      } else {
-        obj = bindRespuesta(0, 'No se encontraron datos', data)
-        response.success(req, res, obj, 200)
-      }
+
+      obj =
+        data.RowDataPacket !== ''
+          ? bindRespuesta(1, '', data)
+          : bindRespuesta(0, 'No se encontraron datos', data)
+
+      response.success(req, res, obj, 201)
     })
     .catch(next)
 }
