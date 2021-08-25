@@ -72,3 +72,16 @@ si queremos detener los procesos basta con poner el indice depues del comando
 
 si quieres detener varios procesos se agregan los indices separados por un espacio
 >pm2 stop 0 1 2
+
+----------------------------------------------------------------------------------
+se utiliza vercel para deployar la api
+con el siguiente comando se inicializa el proyecto cabe mencionar que antes debes instalar vercel de manera global e iniciar sesion
+>vercel
+
+con el siguiente comando lo puedes deployar en produccion
+>vercel --prod
+
+para el deploy en local donde funciona la base de datos
+>vercel dev
+
+nota: es necesario que se deploye en local porque la base de datos a la que apunta no tiene salida a internet es por eso que desde el deploy en produccion no funciona.. para que funcione en produccion tenemos que ingresar los accesos a una base de datos remota

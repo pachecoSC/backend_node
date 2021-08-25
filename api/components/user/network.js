@@ -35,7 +35,7 @@ function bindRespuesta(cod, msg, data) {
 function list(req, res, next) {
   Controller.list()
     .then((data) => {
-      console.log('2do paso', data)
+      // console.log('2do paso', data)
 
       obj =
         data.length > 0
